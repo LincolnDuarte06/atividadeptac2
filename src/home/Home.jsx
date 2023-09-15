@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-export default function Home() {
+
+export default function ToDo() {
+   
     return (
         <div>
-            <h1>Home</h1>
-            <Link to = "/todo">Todo</Link>
+            <h1>Lista de Atividades</h1>
+            <Link to="/todo">TODO</Link>
+           
         </div>
     );
 }

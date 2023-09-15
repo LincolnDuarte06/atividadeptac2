@@ -1,55 +1,49 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./style.css";
 
-export default function ToDo(){
+export default function ToDo() {
     const [atividade, setAtividade] = useState("");
-    const [imagem, setImagem] = useState("");
     const [lista, setLista] = useState([]);
     const [id, setId] = useState(1);
 
     const salvar = (e) => {
         e.preventDefault();
         setLista([...lista, {
-            atividade:atividade,
-            imagem: imagem,
+            atividade: atividade,
             id: id
         }]);
-        setId(id +1);
+        setId(id + 1);
         setAtividade("");
-        setImagem("");
     };
     const remover = (id) => {
-        /*setLista(lista.filter((ativ) => atv.id !== id ? lista:))*/
+        /*setLista(lista.filter((ativ) => (ativ.id !== id ? lista : null)));*/
         const auxLista = [];
         lista.map((lista) => {
-            if(lista.id !== id){
+            if (lista.id !== id) {
                 auxLista.push(lista);
             }
-        }
-        )
+        });
+        setLista(auxLista);
     }
-
-
-
-
-
-    return(
-        <div>
+    return (
+        <div class="container">
             <Link to="/">home</Link>
             <h1>Lista de Atividades</h1>
-
-            <p>{atividade}</p>
-
             <form onSubmit={salvar}>
-
-              <input value={atividade}
-                    onChange={e => setAtividade(e.target.value)} />
-                <input/>
-
-                <button>ADD</button>
+                <input type="text"
+                    value={atividade}
+                    onChange={(e) => { setAtividade(e.target.value) }} />
+                <button>ADICIONAR</button>
             </form>
-
-            {lista.map((ativ)=> <p>{ativ.atividade}</p>)}
+            {lista.map((ativ) =>
+                <ul key={ativ.id}>
+                    <li>
+                        <p>{ativ.atividade}</p>
+                        <button onClick={() => remover(ativ.id)}>Remover</button>
+                    </li>
+                </ul>
+            )}
         </div>
     );
 }
